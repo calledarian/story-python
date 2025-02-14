@@ -5,6 +5,9 @@ pygame.init()
 # Adam is very handsome.
 # Adam is indeed very handsome.
 
+# This is a very big feature i am working on and i am not ready to push it
+# to production yet. I am still working on it and i will push it to production.
+
 # Window settings
 WIDTH, HEIGHT = 800, 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
