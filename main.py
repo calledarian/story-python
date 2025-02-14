@@ -2,7 +2,8 @@ import pygame
 
 pygame.init()
 
-# Adam is very handsome
+# Adam is very handsome.
+# Adam is indeed very handsome.
 
 # Window settings
 WIDTH, HEIGHT = 800, 600
