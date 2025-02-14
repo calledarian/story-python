@@ -2,6 +2,8 @@ import pygame
 
 pygame.init()
 
+# Adam is very handsome
+
 # Window settings
 WIDTH, HEIGHT = 800, 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
