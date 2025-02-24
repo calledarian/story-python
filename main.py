@@ -1,4 +1,5 @@
 import pygame
+import time
 
 # Initialize Pygame
 pygame.init()
@@ -11,6 +12,12 @@ pygame.display.set_icon(icon)
 pygame.display.set_caption("Mystery House")
 
 # Images
+baby_monster_happy = pygame.image.load("Charachters/BabyMNETHappy.png")
+baby_monster_happy = pygame.transform.scale(baby_monster_happy, (150, 250))
+
+baby_monster_sad = pygame.image.load("Charachters/babyMNET.png")
+baby_monster_sad = pygame.transform.scale(baby_monster_sad, (150, 250))
+
 room2 = pygame.image.load("Locations/room2.png")
 room2 = pygame.transform.scale(room2, (screenWIDTH, screenHEIGHT))
 
@@ -114,8 +121,8 @@ while running:
                             print("Correct password! You can proceed.")
                         else:
                             print("Incorrect password. Try again.")
-                    elif event.key in [pygame.K_0, pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9]:  # Only allow number inputs
-                        password_input += event.unicode  # Add typed number to password
+                    elif event.unicode and event.unicode.isalnum():
+                        password_input += event.unicode  # Add typed character to password
                 elif password_correct:
                     room2 = pygame.image.load("locations/room2BLACK.png")
                     room2 = pygame.transform.scale(room2, (screenWIDTH, screenHEIGHT))
@@ -139,9 +146,11 @@ while running:
                     elif monster_status == "love":
                         monster_loved = pygame.image.load("Charachters/monsterGIFT.png")  # New image when monster is petted
                         monster_loved = pygame.transform.scale(monster_loved, (250, 300))
+                    keys = pygame.key.get_pressed()
                     if victor_gifted or victor_regret or nothing_happend:
-                        the_end = True
-                        end_time = pygame.time.get_ticks() + 2500  # Set the end time to 10 seconds from now
+                        if keys[pygame.K_b] and (victor_gifted or victor_regret or nothing_happend):
+                            the_end = True
+
 
     keys = pygame.key.get_pressed()
 
@@ -162,6 +171,8 @@ while running:
             screen.blit(room1, (0, 0))
             if monster_status == "love":
                 screen.blit(monster_loved, (monsterX, monsterY))
+                screen.blit(baby_monster_happy, (250, 350))
+                screen.blit(font.render("Press E to open the gift.", True, (255, 255, 255)), (50, screenHEIGHT - 50))
                 if keys[pygame.K_e]:
                     gift_from_monster.set_colorkey((255, 255, 255))
                     screen.blit(gift_from_monster, (0, 0))
@@ -169,6 +180,8 @@ while running:
 
             elif monster_status == "killed":
                 screen.blit(monster_killed, (monsterX, monsterY))
+                screen.blit(baby_monster_sad, (225, 350))
+                screen.blit(font.render("Press E to open the letter.", True, (255, 255, 255)), (50, screenHEIGHT - 50))
                 if keys[pygame.K_e]:
                     letter_son.set_colorkey((255, 255, 255))
                     screen.blit(letter_son, (0, 0))
@@ -222,8 +235,14 @@ while running:
                 print("Entered the house!")
 
     # Check if it's time to show the end screen
-    if the_end and pygame.time.get_ticks() >= end_time:
+    if the_end:
+        print("The end")
         screen.blit(the_endscene, (0, 0))
+        if keys[pygame.K_q]:
+            running = False
+
+        
+  
 
     pygame.display.flip()
 
